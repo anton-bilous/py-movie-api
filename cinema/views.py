@@ -22,9 +22,16 @@ def movies(request: HttpRequest) -> Response:
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(["GET"])
+@api_view(["GET", "PUT"])
 def movie_detail(request: HttpRequest, pk: int) -> Response:
     if request.method == "GET":
         movie = get_object_or_404(Movie, pk=pk)
         serializer = MovieSerializer(movie)
         return Response(serializer.data, status.HTTP_200_OK)
+
+    if request.method == "PUT":
+        movie = get_object_or_404(Movie, pk=pk)
+        serializer = MovieSerializer(movie, request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
