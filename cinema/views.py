@@ -13,7 +13,7 @@ def movies(request: HttpRequest) -> Response:
     if request.method == "GET":
         movies = Movie.objects.all()
         serializer = MovieSerializer(movies, many=True)
-        return Response(serializer.data, status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     if request.method == "POST":
         serializer = MovieSerializer(data=request.data)
@@ -27,7 +27,7 @@ def movie_detail(request: HttpRequest, pk: int) -> Response:
     if request.method == "GET":
         movie = get_object_or_404(Movie, pk=pk)
         serializer = MovieSerializer(movie)
-        return Response(serializer.data, status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     if request.method == "PUT":
         movie = get_object_or_404(Movie, pk=pk)
