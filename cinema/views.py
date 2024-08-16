@@ -13,3 +13,11 @@ def movies(request: HttpRequest) -> Response:
         movies = Movie.objects.all()
         serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def movie_detail(request: HttpRequest, pk: int) -> Response:
+    if request.method == "GET":
+        movie = Movie.objects.get(pk=pk)
+        serializer = MovieSerializer(movie)
+        return Response(serializer.data, status.HTTP_200_OK)
