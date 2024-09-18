@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import movies, movie_detail
+from cinema.views import movies, movie_detail
 
 
 app_name = "cinema"
